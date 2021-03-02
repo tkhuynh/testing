@@ -1,0 +1,83 @@
+<!-- template 2 -->
+<div class="container">
+	<h1>{{title}}</h1>
+	<div class="row">
+		<div class="col-lg-12" style="padding: 15px 0 0 15px;">
+			<ul class="nav nav-wizard">
+				<li><a title="Program Selection" onclick="data.step=0;render();">Program Selection</a></li>
+				<li><a title="Application" onclick="data.step=1;render();">Application</a></li>
+				<li class="active" ><a title="Agreement">Agreement</a></li>
+				<li class="disabled" ><a title="Confirmation">Confirmation</a></li>
+			</ul>
+			<div class="callout callout-info">
+				<b>Having trouble filling out this form?</b> Contact SCE at <a href="mailto:drp@sce.com">drp@sce.com</a> or call (866) 334-7827 for assistance.
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+<h2>Agreement</h2>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Interruptible Service Agreement
+	</div>
+	<div class="panel-body" style="height: 300px; overflow: scroll">
+		<p>SOUTHERN CALIFORNIA EDISON COMPANY (&quot;SCE&quot;) hereby agrees to  provide interruptible electric service under a schedule as this schedule now  exists or may hereafter be amended or superseded, a copy of which is attached  hereto and by this reference incorporated herein. Customer is bound by this  Contract and all applicable tariffs. SCE and Customer agree as follows: </p>
+		<ol>
+			<li>INDEMNITY: Customer shall defend at its own cost and indemnify and hold  harmless SCE, its officers, agents, employees, assigns, and successors in interest  from and against any and all liability (including liability based upon  negligence and liability without fault), damages, costs, losses, claims,  demands, actions, causes of action, attorneys' fees and expenses, or any of  them, resulting from the death or injury to any person or damage to any  property, including the property and/or personnel of SCE, to the extent caused  by SCE&rsquo;s initiating a Period of Interruption (as defined in the applicable  tariff) and/or by Customer's electric service being disconnected or reconnected  by SCE and/or Customer pursuant thereto. </li>
+			<li>INSURANCE DECLARATION: Insurance may not be used to pay non-compliance  penalties for willful failure to comply with a Notice of Interruption. </li>
+			<li>ENTIRE CONTRACT: This Contract and the declaration(s) constitute the  sole, only, and entire agreement and understanding between the Parties as to  the subject matter of this Contract. Prior agreements, commitments or  representations, whether expressed or implied, and discussions between the  Parties shall not be construed to be a part of this Contract unless contained  herein.</li>
+			<li>NONWAIVER: The failure of either Party to enforce any of the terms and  conditions or to exercise any right or privilege in this Contract shall not be  construed as a waiver of any such terms and conditions or rights or privileges  and the same shall continue and remain in force and effect as if no such  failure to enforce or exercise had occurred.</li>
+			<li>
+				CALIFORNIA PUBLIC UTILITIES COMMISSION:
+				<ol style="list-style-type: lower-alpha">
+					<li>This Contract shall at all  times be subject to such changes or modifications by the Public Utilities  Commission of the State of California.</li>
+					<li>SCE shall have the right to  unilaterally file with the Public Utilities Commission of the State of  California, an application for a change in rates, charges, classification,  service, rule, regulation, or contract relating thereto.</li>
+				</ol>
+			</li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" id="chkAgree" onchange="ValidateAgreement(this)"> By checking this box, I declare under the penalty of perjury under the laws of the State of California that the foregoing is true and correct. I also hereby indicate my consent to execute and submit this document electronically.
+			</label>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<p>
+				<table>
+				<tr>
+					<td width="50"><b>Date</b>:</td>
+					<td>{{app.date}}</td>
+				</tr>
+		        <tr>
+					<td width="30"><b>Name</b>:</td>
+					<td>{{app.firstName}} {{app.lastName}}</td>
+				</tr>
+		        <tr>
+					<td width="30"><b>Title</b>:</td>
+					<td>{{app.title}}</td>
+				</tr>
+			    </table>
+				
+				
+			</p>
+		</div>
+	</div>
+</div>
+</div>
+
+<hr>
+<div class="container">
+<button class="btn btn-primary btn-lg pull-right" id="CompleteEnroll" onclick="submitBtn()" disabled="disabled">Complete Enrollment</button>
+<button class="btn btn-default btn-lg pull-left" onclick="backBtn()">Back</button>
+</div>

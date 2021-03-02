@@ -1,0 +1,276 @@
+<!-- template 1 -->
+<form id="frmCustomer" role="form" onsubmit="return false;" data-toggle="validator">
+
+  <div class="container">
+    <h1>{{title}}</h1>
+    <div class="row">
+      <div class="col-lg-12" style="padding: 15px 0 0 15px;">
+        <ul class="nav nav-wizard">
+          <li><a title="Program Selection" onclick="data.step=0;render();">Program Selection</a></li>
+          <li class="active"><a title="Application">Application</a></li>
+          <li class="disabled"><a title="Agreement">Agreement</a></li>
+          <li class="disabled"><a title="Confirmation">Confirmation</a></li>
+        </ul>
+        <div class="callout callout-info">
+          <b>Having trouble filling out this form?</b> Contact SCE at <a href="mailto:drp@sce.com">drp@sce.com</a> or
+          call (866) 334-7827 for assistance.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <input type="hidden" id="hdnId" />
+    <input type="hidden" id="hdnDeleteElement" />
+    <h2>Customer Authorized Representative</h2>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" pattern="^[a-zA-Z0-9].*" onChange="appTextChange(this)" class="form-control"
+            value="{{app.firstName}}" id="firstName" name="firstName" placeholder="Enter first name" required>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" pattern="^[a-zA-Z0-9].*" onChange="appTextChange(this)" class="form-control"
+            value="{{app.lastName}}" id="lastName" name="lastName" placeholder="Enter last name" required>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" pattern="^[a-zA-Z0-9].*" onChange="appTextChange(this)" class="form-control"
+            value="{{app.title}}" id="title" name="title" placeholder="Enter your title" required>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" data-error="Please enter valid email address"
+            pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$" onChange="appTextChange(this)"
+            class="form-control" value="{{app.email}}" id="email" name="email" placeholder="Enter email address"
+            required>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="text" onChange="appTextChange(this)" class="form-control" value="{{app.phone}}" id="phone"
+            name="phone" placeholder="(###) ###-####" required>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--Panels-->
+  <div class="container" id="ServiceDiv">
+    <h2>Customer Service Account Information</h2>
+    {{#each accounts}}
+    <div class="panel panel-default panelAccount" id="panel_{{@index}}">
+
+      <div class="panel-heading" onClick="accordian({{@index}})">
+        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        <span id="customerDisplay_{{@index}}">{{customerName}}</span>
+        <span class="badge" id="accountDisplay_{{@index}}">{{accountNumber}}</span>
+        <button type="button" class="btn btn-default pull-right trashCan" style="margin-top: -7px; margin-right: -12px;"
+          onclick="data.panelSel={{@index}}; $('#DeleteConfirm').modal({show:true})"><span
+            class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="customerName_{{@index}}">Service Account Name (as it appears on your bill)</label>
+              <input type="text" pattern="^[a-zA-Z0-9].*" class="form-control" id="customerName_{{@index}}"
+                name="customerName_{{@index}}" placeholder="Enter service account name" value="{{customerName}}"
+                onchange="updateAccount(this,{{@index}})" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="accountNumber_{{@index}}">Service Account Number</label>
+              <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
+                data-target="#ServiceAccount">?</button>
+              <input type="text" class="form-control servAccount" id="accountNumber_{{@index}}"
+                name="accountNumber_{{@index}}" placeholder="3-###-####-##" value="{{accountNumber}}"
+                onchange="updateAccount(this,{{@index}})" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="serviceAddress_{{@index}}">Service Address (as it appears on your bill)</label>
+              <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
+                data-target="#ServiceAddress">?</button>
+              <input type="text" pattern="^[a-zA-Z0-9].*" class="form-control" id="serviceAddress_{{@index}}"
+                name="serviceAddress_{{@index}}" placeholder="Enter Address" value="{{serviceAddress}}"
+                onchange="updateAccount(this,{{@index}})" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="form-group">
+              <label for="serviceCity_{{@index}}">Service City</label>
+              <input type="text" pattern="^[a-zA-Z0-9].*" class="form-control" id="serviceCity_{{@index}}"
+                name="serviceCity_{{@index}}" placeholder="Enter City" value="{{serviceCity}}"
+                onchange="updateAccount(this,{{@index}})" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="form-group">
+              <label for="serviceZip_{{@index}}">Service ZIP Code</label>
+              <input type="text" class="form-control servZip" id="serviceZip_{{@index}}" name="serviceZip_{{@index}}"
+                placeholder="#####" value="{{serviceZip}}" onchange="updateAccount(this,{{@index}})" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>
+              Prohibited Resource Attestation <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
+                data-target="#ProhibitedResource">?</button>
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="prohibitedResource_{{@index}}" id="prohibitedResource_{{@index}}_a"
+                    value="NO" onClick="setAccountRadio('{{@index}}','prohibitedResource', 'NO')" {{checked
+                    prohibitedResource 'NO' }} required> I do not have a Prohibited Resource on site.
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="prohibitedResource_{{@index}}" id="prohibitedResource_{{@index}}_b"
+                    value="YES-NON USE" onClick="setAccountRadio('{{@index}}','prohibitedResource', 'YES-NON USE')"
+                    {{checked prohibitedResource 'YES-NON USE' }} required> I do have a Prohibited Resource(s) on site
+                  and I will not use the resource(s) to reduce load during any Demand Response Event.
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="prohibitedResource_{{@index}}" id="prohibitedResource_{{@index}}_c"
+                    value="YES-USE" onClick="setAccountRadio('{{@index}}','prohibitedResource', 'YES-USE')" {{checked
+                    prohibitedResource 'YES-USE' }} required>I do have a Prohibited Resource(s) on site and I may have
+                  to run the resource(s) during Demand Response events for safety reasons, health reasons, or
+                  operational reasons.
+                  <br>
+                </label>
+              </div>
+            </div>
+
+            <!--<div class="pr well {{checked prohibitedResource 'YES-USE'}}" id="progOptionsBox_{{@index}}">-->
+            <div class="form-group">
+              Enter in total number of Prohibited Resource(s) on site
+              <input style="width:60px; display: inline-block;"
+                data-error="Please enter the number of Prohibited Resource(s)." type="text"
+                class="form-control input-sm" id="numberOfResources_{{@index}}" name="numberOfResources_{{@index}}"
+                placeholder="#" value="{{numberOfResources}}" onchange="updateAccount(this,{{@index}})" {{required
+                prohibitedResource 'YES-USE' }} {{required prohibitedResource 'YES-NON USE' }}>
+              <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+              My Prohibited Resource(s) has(have) a total nameplate capacity value of
+              <input style="width:60px; display: inline-block;"
+                data-error="Please enter the total capacity value for all of your Prohibited Resources." type="text"
+                class="form-control input-sm kw" id="prohibitedResourceKw_{{@index}}"
+                name="prohibitedResourceKw_{{@index}}" placeholder="#" value="{{prohibitedResourceKw}}"
+                onchange="updateAccount(this,{{@index}})" {{required prohibitedResource 'YES-USE' }}> kW.
+              {{#unless ../progOptions}}
+              <button id="prohibitedResourceKwQMark_{{@index}}" type="button" class="btn btn-default btn-xs"
+                data-toggle="modal" data-target="#ProhibitedResource2">?</button>
+              {{/unless}}
+              <div class="help-block with-errors"></div>
+            </div>
+            {{#if ../progOptions}}
+            <div class="row">
+              <div class="col-sm-6">
+                <h4>Participation Option <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
+                    data-target="#FirmServiceReduce">?</button></h4>
+
+              </div>
+              <div class="col-sm-6">
+                <h4>Firm Service Level (kW)</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group">
+
+                <label class="radio-inline">
+                  <input required type="radio" name="programOptions_{{@index}}" id="programOptions_{{@index}}a"
+                    value="BIP-15" onClick="setAccountRadio('{{@index}}','programOptions', 'BIP-15')" {{checked
+                    programOptions 'BIP-15' }} {{required prohibitedResource 'YES-USE' }}> A (15 Minutes)
+                </label>
+                <label class="radio-inline">
+                  <input required type="radio" name="programOptions_{{@index}}" id="programOptions_{{@index}}b"
+                    value="BIP-30" onClick="setAccountRadio('{{@index}}','programOptions', 'BIP-30')" {{checked
+                    programOptions 'BIP-30' }} {{required prohibitedResource 'YES-USE' }}> B (30 Minutes)
+                </label>
+                <br>&nbsp;
+
+              </div>
+              <div class="col-sm-6 form-group">
+                <input required style="width:60px; display: inline-block;" type="text" class="form-control input-sm kw"
+                  id="programOptionsFSL_{{@index}}" name="programOptionsFSL_{{@index}}" placeholder="#"
+                  value="{{programOptionsFSL}}" onchange="updateAccount(this,{{@index}})" {{required
+                  prohibitedResource 'YES-USE' }}> <button type="button" class="btn btn-default btn-xs"
+                  data-toggle="modal" data-target="#FirmServiceLevel">?</button>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            {{/if}}
+
+            <!--</div>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  <!--Panels End-->
+
+  <hr>
+
+  <div class="container">
+    <button type="submit" class="btn btn-primary btn-lg pull-right" onclick="continueBtn()">Continue</button>
+    <button class="btn btn-default btn-lg pull-left" onclick="cancelBtn()">Cancel</button>
+  </div>
+
+
+</form>
